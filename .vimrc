@@ -32,7 +32,7 @@ highlight Folded ctermbg=235  ctermfg=3 cterm=BOLD
 :inoremap [[ []<esc>a
 :inoremap {{ {}<esc>a
 ""插入时换行
-:inoremap <C-N> <esc>o
+:inoremap <C-o> <esc>o
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Specify a directory for plugins
