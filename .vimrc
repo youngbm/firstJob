@@ -153,8 +153,8 @@ highlight Pmenu ctermbg=236  ctermfg=15
 highlight PmenuSel ctermbg=green  ctermfg=18
 """""""""""""""""" Display """"""""""""""""""""
 
-autocmd VimEnter *go TagbarToggle
-autocmd VimEnter *go NERDTreeToggle
+autocmd VimEnter *.py,*.c,*.cpp,*.h,*go TagbarToggle
+autocmd VimEnter *.py,*.c,*.cpp,*.h,*go NERDTreeToggle
 autocmd VimEnter * wincmd w
 
 """"""""""""""""""""""""""""" End """""""""""""""""""""""""""""
