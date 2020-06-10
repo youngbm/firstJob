@@ -2,6 +2,8 @@
 syntax on
 filetype plugin indent on
 
+":XtermColorTable to see all colors"
+set t_Co=256
 set nu
 set mouse=n
 set nocompatible
@@ -11,10 +13,17 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
-set t_Co=256
+" 搜索高亮
 set hlsearch
 highlight Search ctermbg=53  ctermfg=7
 
+" 折叠
+set foldmethod=indent
+set foldlevelstart=0 ""99 是不折叠""
+:nnoremap <space> za
+highlight Folded ctermbg=235  ctermfg=3 cterm=BOLD 
+
+" 常用操作
 :inoremap " ""<esc>i
 :inoremap ( ()<esc>i
 :inoremap [ []<esc>i
@@ -22,8 +31,6 @@ highlight Search ctermbg=53  ctermfg=7
 :inoremap (( ()<esc>a
 :inoremap [[ []<esc>a
 :inoremap {{ {}<esc>a
-:inoremap <C-k> <Up>
-:inoremap <C-j> <Down>
 ""插入时换行
 :inoremap <C-N> <esc>o
 
@@ -32,42 +39,34 @@ highlight Search ctermbg=53  ctermfg=7
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
-
 " Make sure you use single quotes
-
+ 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
-
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
 " Using a non-master branch
 ""Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'ycm-core/YouCompleteMe'
-
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
 Plug 'fatih/vim-go', { 'tag': '*' }
-
 " Plugin options
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-
 " Unmanaged plugin (manually installed and updated)
 Plug '~/my-prototype-plugin'
 
 " Initialize plugin system
 call plug#end()
 
-""""  VIM-GO """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""  VIM-GO """""""""""""""""""""""""""""
 :nnoremap <F5>  :GoRun %  <CR>
-let g:go_fmt_command = "goimports" " 格式化将默认的 gofmt 替换
+let g:go_fmt_command = "goimports" "格式化将默认的gofmt替换
 let g:go_autodetect_gopath = 1
 let g:go_list_type = "quickfix"
 let g:go_version_warning = 1
@@ -120,7 +119,6 @@ let g:tagbar_type_go = {
 """""" YCM """"""""""""""""""""""""""""""""""""
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后自动关闭预览窗口
 set completeopt=menuone,menu,longest "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"	"回车即选中当前项
 
 let g:ycm_server_log_level = 'info'
 let g:ycm_complete_in_strings=1  "字符串中也能补全
@@ -141,7 +139,7 @@ let g:ycm_semantic_triggers =  {
 \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
 \ 'cs,lua,javascript': ['re!\w{2}'],
 \ }
-" 什么文件会弹补全窗口
+" 指定文件才会弹补全窗口
 let g:ycm_filetype_whitelist = { 
 \ "go":1,
 \ "c":1,
@@ -153,11 +151,10 @@ let g:ycm_filetype_whitelist = {
 
 highlight Pmenu ctermbg=236  ctermfg=15
 highlight PmenuSel ctermbg=green  ctermfg=18
-
 """""""""""""""""" Display """"""""""""""""""""
 
 autocmd VimEnter *go TagbarToggle
 autocmd VimEnter *go NERDTreeToggle
 autocmd VimEnter * wincmd w
 
-"""""""""""""""""" End """"""""""""""""""""
+""""""""""""""""""""""""""""" End """""""""""""""""""""""""""""
