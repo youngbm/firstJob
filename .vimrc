@@ -1,4 +1,3 @@
-
 syntax on
 filetype plugin indent on
 
@@ -19,7 +18,7 @@ highlight Search ctermbg=53  ctermfg=7
 
 " 折叠
 set foldmethod=indent
-set foldlevelstart=0 ""99 是不折叠""
+set foldlevelstart=9 ""99 是不折叠""
 :nnoremap <space> za
 highlight Folded ctermbg=235  ctermfg=3 cterm=BOLD 
 
@@ -31,8 +30,12 @@ highlight Folded ctermbg=235  ctermfg=3 cterm=BOLD
 :inoremap (( ()<esc>a
 :inoremap [[ []<esc>a
 :inoremap {{ {}<esc>a
+"返回上一行
+:inoremap <Space><CR> <esc>ka <tab>
 ""插入时换行
 :inoremap <C-o> <esc>o
+" 保存
+:inoremap :: <esc>:w<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Specify a directory for plugins
@@ -65,7 +68,8 @@ Plug '~/my-prototype-plugin'
 call plug#end()
 
 """"""""""""""""""""""""  VIM-GO """""""""""""""""""""""""""""
-:nnoremap <F5>  :GoRun %  <CR>
+:nnoremap <F5> :GoRun %<CR>
+:inoremap <F5> <esc>:w<CR> :GoRun %<CR>
 let g:go_fmt_command = "goimports" "格式化将默认的gofmt替换
 let g:go_autodetect_gopath = 1
 let g:go_list_type = "quickfix"
@@ -149,6 +153,7 @@ let g:ycm_filetype_whitelist = {
 \ "py":1,
 \}
 
+:inoremap <C-k> <Up>
 highlight Pmenu ctermbg=236  ctermfg=15
 highlight PmenuSel ctermbg=green  ctermfg=18
 """""""""""""""""" Display """"""""""""""""""""
