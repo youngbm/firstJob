@@ -16,7 +16,7 @@ set expandtab
 
 set hlsearch
 "粘贴模式切换"
-set pastetoggle=<F5>
+set pastetoggle=<F12>
 " 折叠
 set foldmethod=indent
 set foldlevelstart=9 ""99 是不折叠""
@@ -72,6 +72,7 @@ call plug#end()
 
 """"""""""""""""""""   SirVer/ultisnips """"""""""""""""""""""""
 " better key bindings for UltiSnipsExpandTrigger
+""let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsExpandTrigger = "<s-tab>"
 
 """"""""""""""""""""""""  VIM-GO """""""""""""""""""""""""""""
@@ -100,12 +101,12 @@ colorscheme molokai
 
 """""""""""""""""  NERDTree """""""""""""""""""""""
 " 打开和关闭NERDTree快捷键
- map <F8> :NERDTreeToggle<CR>
+map <F9> :NERDTreeToggle<CR>
 " 设置宽度
 let NERDTreeWinSize=35
 
 """""" Taqbar """"""""""""""""""""""""""""""""""""
-nmap <F9> :TagbarToggle<CR>
+nmap <F10> :TagbarToggle<CR>
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
