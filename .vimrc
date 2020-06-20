@@ -2,6 +2,7 @@ syntax on
 filetype plugin indent on
 
 ":XtermColorTable to see all colors"
+set encoding=utf-8
 set t_Co=256
 set nu
 set mouse=n
@@ -12,15 +13,14 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
-" 搜索高亮
-set hlsearch
-highlight Search ctermbg=53  ctermfg=7
 
+set hlsearch
+"粘贴模式切换"
+set pastetoggle=<F5>
 " 折叠
 set foldmethod=indent
 set foldlevelstart=9 ""99 是不折叠""
 :nnoremap <space> za
-highlight Folded ctermbg=235  ctermfg=3 cterm=BOLD 
 
 " 常用操作
 :inoremap " ""<esc>i
@@ -37,28 +37,31 @@ highlight Folded ctermbg=235  ctermfg=3 cterm=BOLD
 " 保存
 :inoremap :: <esc>:w<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""" 插件设置  """""""""""""""""""""""""""""""""""""" 
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 " Make sure you use single quotes
- 
+
+Plug 'guns/xterm-color-table.vim'
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 " Multiple Plug commands can be written in a single line using | separators
+Plug 'ervandew/supertab'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 " Using a non-master branch
-""Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'ycm-core/YouCompleteMe'
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
 Plug 'fatih/vim-go', { 'tag': '*' }
+Plug 'fatih/molokai'
 " Plugin options
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 " Unmanaged plugin (manually installed and updated)
@@ -67,9 +70,15 @@ Plug '~/my-prototype-plugin'
 " Initialize plugin system
 call plug#end()
 
+""""""""""""""""""""   SirVer/ultisnips """"""""""""""""""""""""
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<s-tab>"
+
 """"""""""""""""""""""""  VIM-GO """""""""""""""""""""""""""""
-:nnoremap <F5> :GoRun %<CR>
-:inoremap <F5> <esc>:w<CR> :GoRun %<CR>
+:nnoremap <F1> :GoDoc<CR>
+:nnoremap <F2> :q<CR>
+:nnoremap <F4> :GoRun %<CR>
+:inoremap <F4> <esc>:w<CR> :GoRun %<CR>
 let g:go_fmt_command = "goimports" "格式化将默认的gofmt替换
 let g:go_autodetect_gopath = 1
 let g:go_list_type = "quickfix"
@@ -82,7 +91,12 @@ let g:go_highlight_operators = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_generate_tags = 1
+""let g:go_metalinter_autosave = 1
 let g:godef_split=2
+let g:rehash256 = 1
+let g:molokai_original = 1
+"go 配色方案"
+colorscheme molokai
 
 """""""""""""""""  NERDTree """""""""""""""""""""""
 " 打开和关闭NERDTree快捷键
@@ -124,13 +138,13 @@ let g:tagbar_type_go = {
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后自动关闭预览窗口
 set completeopt=menuone,menu,longest "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 
+let g:ycm_show_diagnostics_ui = 0 "关闭语法提示
+let g:ycm_add_preview_to_completeopt = 0 "关闭函数原型提示
+let g:ycm_cache_omnifunc=0 " 禁止缓存匹配项,每次都重新生成匹配项
 let g:ycm_server_log_level = 'info'
 let g:ycm_complete_in_strings=1  "字符串中也能补全
 let g:ycm_complete_in_comments = 0 "在注释输入中也能补全
 let g:ycm_seed_identifiers_with_syntax=0 " 语法关键字补全
-let g:ycm_cache_omnifunc=0 " 禁止缓存匹配项,每次都重新生成匹配项
-let g:ycm_add_preview_to_completeopt = 0 "关闭函数原型提示
-let g:ycm_show_diagnostics_ui = 0 "关闭语法提示
 let g:ycm_confirm_extra_conf=0 "关闭加载.ycm_extra_conf.py提示
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_collect_identifiers_from_tags_files=1 " 开启 YCM 基于标签引擎
@@ -153,13 +167,26 @@ let g:ycm_filetype_whitelist = {
 \ "py":1,
 \}
 
-:inoremap <C-k> <Up>
-highlight Pmenu ctermbg=236  ctermfg=15
-highlight PmenuSel ctermbg=green  ctermfg=18
-"""""""""""""""""" Display """"""""""""""""""""
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
 
+""""""""""""""""""""""""""""""" Display """""""""""""""""""""""""""""""
 autocmd VimEnter *.py,*.c,*.cpp,*.h,*go TagbarToggle
 autocmd VimEnter *.py,*.c,*.cpp,*.h,*go NERDTreeToggle
 autocmd VimEnter * wincmd w
+
+""""""""""""""""""""""""""""" HighLight """""""""""""""""""""""""
+"放最后防止部分覆盖
+"YMC 提示列表
+highlight Pmenu ctermbg=236  ctermfg=15
+highlight PmenuSel ctermbg=green  ctermfg=18
+" 搜索高亮
+highlight Search ctermbg=53  ctermfg=7
+"折叠时显示"
+highlight Folded ctermbg=235  ctermfg=3 cterm=BOLD 
+"只有文件列表生效
+highlight CursorLine cterm=underline
 
 """"""""""""""""""""""""""""" End """""""""""""""""""""""""""""
