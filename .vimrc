@@ -186,7 +186,7 @@ let g:ycm_filetype_whitelist = {
 \ "cpp":1, 
 \ "objc":1,
 \ "sh":1,
-\ "py":1,
+\ "java":1,
 \ "python":1,
 \}
 
@@ -196,8 +196,8 @@ let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
 """"""""""""""""""""""""""""""" Display """""""""""""""""""""""""""""""
-autocmd VimEnter *.py,*.c,*.cpp,*.h,*go TagbarToggle
-autocmd VimEnter *.py,*.c,*.cpp,*.h,*go NERDTreeToggle
+autocmd VimEnter *.java,*.py,*.c,*.cpp,*.h,*go TagbarToggle
+autocmd VimEnter *.java,*.py,*.c,*.cpp,*.h,*go NERDTreeToggle
 autocmd VimEnter * wincmd w
 
 """"""""""""""""""""""""""""" HighLight """""""""""""""""""""""""
