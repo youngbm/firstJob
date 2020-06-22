@@ -35,7 +35,8 @@ set foldlevelstart=9 ""99 是不折叠""
 ""插入时换行
 :inoremap <C-o> <esc>o
 " 保存
-:inoremap :: <esc>:w<CR>
+:inoremap JK <esc>:w<CR>
+:nnoremap JK <esc>:w<CR>
 
 """""""""""""""""""""""""""""""""""""" 插件设置  """""""""""""""""""""""""""""""""""""" 
 " Specify a directory for plugins
@@ -59,6 +60,7 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 " Using a non-master branch
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'ycm-core/YouCompleteMe'
+Plug 'tenfyzhong/CompleteParameter.vim'
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
 Plug 'fatih/vim-go', { 'tag': '*' }
 Plug 'fatih/molokai'
@@ -135,6 +137,18 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
     \ }
 
+"""""" CompleteParameter """"""""""""""""""""""""""""""""""""
+inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+smap <C-j> <Plug>(complete_parameter#goto_next_parameter)
+imap <C-j> <Plug>(complete_parameter#goto_next_parameter)
+nmap <C-j> <Plug>(complete_parameter#goto_next_parameter)
+smap <C-k> <Plug>(complete_parameter#goto_previous_parameter)
+imap <C-k> <Plug>(complete_parameter#goto_previous_parameter)
+nmap <C-k> <Plug>(complete_parameter#goto_previous_parameter)
+
+let g:complete_parameter_py_keep_value = 1
+let g:complete_parameter_py_remove_default = 1
+
 """""" YCM """"""""""""""""""""""""""""""""""""
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后自动关闭预览窗口
 set completeopt=menuone,menu,longest "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
@@ -153,6 +167,13 @@ let g:ycm_min_num_of_chars_for_completion=1 " 从第2个键入字符就开始罗
 let g:ycm_min_num_identifier_candidate_chars = 2
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_confirm_extra_conf=0 "关闭加载.ycm_extra_conf.py提示
+
+let g:ycm_python_interpreter_path = '/usr/bin/python'
+let g:ycm_python_sys_path = ['/usr/lib/python3/dist-packages/', '/usr/local/lib/python3.5']
+let g:ycm_extra_conf_vim_data = [
+  \  'g:ycm_python_interpreter_path',
+  \  'g:ycm_python_sys_path'
+  \]
 let g:ycm_global_ycm_extra_conf = '/root/.vim/plugged/YouCompleteMe/.ycm_extra_conf.py'
 let g:ycm_semantic_triggers =  {
 \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
@@ -166,6 +187,7 @@ let g:ycm_filetype_whitelist = {
 \ "objc":1,
 \ "sh":1,
 \ "py":1,
+\ "python":1,
 \}
 
 " make YCM compatible with UltiSnips (using supertab)
