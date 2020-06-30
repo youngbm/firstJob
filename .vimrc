@@ -23,13 +23,13 @@ set foldlevelstart=9 ""99 是不折叠""
 :nnoremap <space> za
 
 " 常用操作
-:inoremap " ""<esc>i
-:inoremap ( ()<esc>i
-:inoremap [ []<esc>i
-:inoremap { {}<esc>i
-:inoremap (( ()<esc>a
-:inoremap [[ []<esc>a
-:inoremap {{ {}<esc>a
+:inoremap "" ""<esc>i
+:inoremap (( ()<esc>i
+:inoremap [[ []<esc>i
+:inoremap {{ {}<esc>i
+"":inoremap (( ()<esc>a
+"":inoremap [[ []<esc>a
+"":inoremap {{ {}<esc>a
 "返回上一行
 :inoremap <Space><CR> <esc>ka <tab>
 ""插入时换行
@@ -38,7 +38,7 @@ set foldlevelstart=9 ""99 是不折叠""
 :inoremap JK <esc>:w<CR>
 :nnoremap JK <esc>:w<CR>
 
-"""""""""""""""""""""""""""""""""""""" 插件设置  """""""""""""""""""""""""""""""""""""" 
+"""""""""""""""""""""""""""""""""""""" 插件设置  """"""""""""""""""""""""""""""""""""""
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
@@ -82,6 +82,9 @@ let g:UltiSnipsExpandTrigger = "<s-tab>"
 :nnoremap <F2> :q<CR>
 :nnoremap <F4> :GoRun %<CR>
 :inoremap <F4> <esc>:w<CR> :GoRun %<CR>
+:nnoremap <F5> :GoTest <CR>
+:inoremap <F5> <esc>:w<CR> :GoTest <CR>
+
 let g:go_fmt_command = "goimports" "格式化将默认的gofmt替换
 let g:go_autodetect_gopath = 1
 let g:go_list_type = "quickfix"
@@ -180,10 +183,10 @@ let g:ycm_semantic_triggers =  {
 \ 'cs,lua,javascript': ['re!\w{2}'],
 \ }
 " 指定文件才会弹补全窗口
-let g:ycm_filetype_whitelist = { 
+let g:ycm_filetype_whitelist = {
 \ "go":1,
 \ "c":1,
-\ "cpp":1, 
+\ "cpp":1,
 \ "objc":1,
 \ "sh":1,
 \ "java":1,
@@ -208,7 +211,7 @@ highlight PmenuSel ctermbg=green  ctermfg=18
 " 搜索高亮
 highlight Search ctermbg=53  ctermfg=7
 "折叠时显示"
-highlight Folded ctermbg=235  ctermfg=3 cterm=BOLD 
+highlight Folded ctermbg=235  ctermfg=3 cterm=BOLD
 "只有文件列表生效
 highlight CursorLine cterm=underline
 
