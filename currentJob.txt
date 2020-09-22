@@ -1,0 +1,9 @@
+aws相关：
+    Common：
+	  data store： DynamoDB, Redis, RDS, Redshift, S3, Athena,
+	  app: VPC, EC2, ASG, Lambda and so on.
+	Audit： Cloudtrail, IAM, CostSaving: Trained and know most ways of costsaving, and applied to PRD env.
+	Monitoring: Cloudwatch alarm, Cloudwatch log group, SNS
+k8s相关：docker, kubernetes, helm, harbor, AWS ECR EKS，central logging(ELK,filebeat), centralMetrics(Prometheus stack)
+IaC相关：git gitlab, terraform ansible, packer, AMI
+CICD相关：git, gitlab, github jenkins, aws codedeploy
